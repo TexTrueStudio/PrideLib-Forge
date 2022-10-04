@@ -1,12 +1,12 @@
 package io.github.queerbric.pride;
 
 import com.google.gson.Gson;
-import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
-import net.fabricmc.loader.api.FabricLoader;
+import net.fakefabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +36,7 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 		return ID;
 	}
 
-	@Override
+	//@Override
 	public CompletableFuture<List<PrideFlag>> load(ResourceManager manager, Profiler profiler, Executor executor) {
 		return CompletableFuture.supplyAsync(() -> loadFlags(manager));
 	}
@@ -56,7 +56,7 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 			String name = parts[parts.length - 1];
 			name = name.substring(0, name.length() - 5);
 
-			try (var reader = new InputStreamReader(entry.getValue().open())) {
+			try (var reader = new InputStreamReader(entry.getValue().getInputStream())) {
 				PrideFlag.Properties builder = GSON.fromJson(reader, PrideFlag.Properties.class);
 
 				for (String color : builder.colors) {
@@ -74,7 +74,7 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 			}
 		}
 
-		var prideFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), "pride.json");
+		var prideFile = new File(FMLPaths.CONFIGDIR.get().toFile(), "pride.json");
 		if (prideFile.exists()) {
 			try (var reader = new FileReader(prideFile)) {
 				Config config = GSON.fromJson(reader, Config.class);
@@ -89,9 +89,9 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 		} else {
 			var id = new Identifier("pride", "flags.json");
 
-			Optional<Resource> resource = manager.method_14486(id);
+			Optional<Resource> resource = manager.getResource(id);
 			if (resource.isPresent()) {
-				try (var reader = new InputStreamReader(resource.get().open())) {
+				try (var reader = new InputStreamReader(resource.get().getInputStream())) {
 					Config config = GSON.fromJson(reader, Config.class);
 
 					if (config.flags != null) {
