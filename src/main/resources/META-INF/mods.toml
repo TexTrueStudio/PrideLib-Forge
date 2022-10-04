@@ -11,7 +11,7 @@ authors = "TexTrueStudio, TexTrue"
 description = '''
 A unified library for data-driven flags"
 '''
-logoFile = "../assets/flagslib/icon.png"
+logoFile = "./assets/flagslib/icon.png"
 
 [[dependencies.flagslib]]
 modId = "minecraft"
