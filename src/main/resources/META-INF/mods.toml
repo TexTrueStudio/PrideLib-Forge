@@ -3,24 +3,24 @@ loaderVersion = "[40,)"
 license = "Apache-2.0"
 
 [[mods]]
-modId = "pridelib"
+modId = "flagslib"
 version = "${version}"
-displayName = "PrideLib-Forge"
+displayName = "FlagsLib-Forge"
 credits="Emi, unascribed, LambdAurora, TexTrue"
 authors = "TexTrueStudio, TexTrue"
 description = '''
 A unified library for data-driven flags"
 '''
-logoFile = "assets/pride/icon.png"
+logoFile = "../assets/flagslib/icon.png"
 
-[[dependencies.pridelib]]
+[[dependencies.flagslib]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.pridelib]]
+[[dependencies.flagslib]]
 modId = "forge"
 mandatory = true
 versionRange = "[36,)"

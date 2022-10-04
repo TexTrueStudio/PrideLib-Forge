@@ -1,4 +1,4 @@
-package io.github.queerbric.pride;
+package io.github.queerbric.flagslib;
 
 import com.google.gson.Gson;
 import net.fakefabricmc.fabric.api.resource.SimpleResourceReloadListener;
@@ -21,9 +21,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
-public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>> {
-	private static final Identifier ID = new Identifier("pride", "flags");
-	private static final Logger LOGGER = LogManager.getLogger("pride");
+public class FlagsLibLoader implements SimpleResourceReloadListener<List<FlagsLibFlag>> {
+	private static final Identifier ID = new Identifier("flagslib", "flags");
+	private static final Logger LOGGER = LogManager.getLogger("flagslib");
 	private static final Gson GSON = new Gson();
 	private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("^#[0-9a-fA-F]{6}$");
 
@@ -37,17 +37,17 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 	}
 
 	//@Override
-	public CompletableFuture<List<PrideFlag>> load(ResourceManager manager, Profiler profiler, Executor executor) {
+	public CompletableFuture<List<FlagsLibFlag>> load(ResourceManager manager, Profiler profiler, Executor executor) {
 		return CompletableFuture.supplyAsync(() -> loadFlags(manager));
 	}
 
 	@Override
-	public CompletableFuture<Void> apply(List<PrideFlag> list, ResourceManager manager, Profiler profiler, Executor executor) {
+	public CompletableFuture<Void> apply(List<FlagsLibFlag> list, ResourceManager manager, Profiler profiler, Executor executor) {
 		return CompletableFuture.runAsync(() -> applyFlags(list));
 	}
 
-	public static List<PrideFlag> loadFlags(ResourceManager manager) {
-		var flags = new ArrayList<PrideFlag>();
+	public static List<FlagsLibFlag> loadFlags(ResourceManager manager) {
+		var flags = new ArrayList<FlagsLibFlag>();
 
 		outer:
 		for (var entry : manager.findResources("flags", path -> path.getPath().endsWith(".json")).entrySet()) {
@@ -57,24 +57,24 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 			name = name.substring(0, name.length() - 5);
 
 			try (var reader = new InputStreamReader(entry.getValue().getInputStream())) {
-				PrideFlag.Properties builder = GSON.fromJson(reader, PrideFlag.Properties.class);
+				FlagsLibFlag.Properties builder = GSON.fromJson(reader, FlagsLibFlag.Properties.class);
 
 				for (String color : builder.colors) {
 					if (!HEX_COLOR_PATTERN.matcher(color).matches()) {
-						LOGGER.warn("[pride] Malformed flag data for flag " + name + ", " + color
+						LOGGER.warn("[flagslib] Malformed flag data for flag " + name + ", " + color
 								+ " is not a valid color, must be a six-digit hex color like #FF00FF");
 						continue outer;
 					}
 				}
 
-				var flag = new PrideFlag(name, builder);
+				var flag = new FlagsLibFlag(name, builder);
 				flags.add(flag);
 			} catch (Exception e) {
-				LOGGER.warn("[pride] Malformed flag data for flag " + name, e);
+				LOGGER.warn("[flagslib] Malformed flag data for flag " + name, e);
 			}
 		}
 
-		var prideFile = new File(FMLPaths.CONFIGDIR.get().toFile(), "pride.json");
+		var prideFile = new File(FMLPaths.CONFIGDIR.get().toFile(), "flagslib.json");
 		if (prideFile.exists()) {
 			try (var reader = new FileReader(prideFile)) {
 				Config config = GSON.fromJson(reader, Config.class);
@@ -84,10 +84,10 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 					flags.removeIf(flag -> !list.contains(flag.getId()));
 				}
 			} catch (Exception e) {
-				LOGGER.warn("[pride] Malformed flag data for pride.json config");
+				LOGGER.warn("[flagslib] Malformed flag data for flagslib.json config");
 			}
 		} else {
-			var id = new Identifier("pride", "flags.json");
+			var id = new Identifier("flagslib", "flags.json");
 
 			Optional<Resource> resource = manager.getResource(id);
 			if (resource.isPresent()) {
@@ -99,7 +99,7 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 						flags.removeIf(flag -> !list.contains(flag.getId()));
 					}
 				} catch (Exception e) {
-					LOGGER.warn("[pride] Malformed flag data for flags.json", e);
+					LOGGER.warn("[flagslib] Malformed flag data for flags.json", e);
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public class PrideLoader implements SimpleResourceReloadListener<List<PrideFlag>
 		return flags;
 	}
 
-	private static void applyFlags(List<PrideFlag> flags) {
-		PrideFlags.setFlags(flags);
+	private static void applyFlags(List<FlagsLibFlag> flags) {
+		FlagsLibFlags.setFlags(flags);
 	}
 }

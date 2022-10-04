@@ -1,4 +1,4 @@
-package io.github.queerbric.pride;
+package io.github.queerbric.flagslib;
 
 //import net.fakefabricmc.api.ClientModInitializer;
 import net.fakefabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -13,13 +13,13 @@ import net.minecraftforge.network.NetworkConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(PrideClient.MODID)
-public class PrideClient {
+@Mod(FlagsLibClient.MODID)
+public class FlagsLibClient {
 
-	public static Logger LOGGER = LogManager.getLogger("PrideLib-Forge");
+	public static Logger LOGGER = LogManager.getLogger("FlagsLib-Forge");
 
-	public static final String MODID = "pridelib";
-	public PrideClient() {
+	public static final String MODID = "flagslib";
+	public FlagsLibClient() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onInitializeClient);
 
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -27,19 +27,19 @@ public class PrideClient {
 	}
 
 	public void onInitializeClient(final FMLClientSetupEvent event) {
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) new PrideLoader());
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) new FlagsLibLoader());
 	}
 
 	public static Logger logger() {
 		if (LOGGER == null) {
-			LOGGER = LogManager.getLogger("Forbric API");
+			LOGGER = LogManager.getLogger("FlagsLib-Forge");
 		}
 
 		return LOGGER;
 	}
 	//@Override
 	//public void onInitializeClient() {
-	//	ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) new PrideLoader());
+	//	ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) new FlagsLibLoader());
 	//}
 
 	//@Override

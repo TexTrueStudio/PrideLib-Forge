@@ -1,4 +1,4 @@
-package io.github.queerbric.pride;
+package io.github.queerbric.flagslib;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -7,25 +7,25 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 /**
- * Represents a pride flag.
+ * Represents a flagslib flag.
  */
-public class PrideFlag {
+public class FlagsLibFlag {
 	private final String id;
-	private final PrideFlagShape shape;
+	private final FlagsLibFlagShape shape;
 	private final IntList colors;
 	private final Identifier shapeId;
 
-	protected PrideFlag(String id, Properties props) {
+	protected FlagsLibFlag(String id, Properties props) {
 		this.id = id;
 		if (props.shape == null) {
-			this.shapeId = new Identifier("pride", "horizontal_stripes");
+			this.shapeId = new Identifier("flagslib", "horizontal_stripes");
 		} else {
-			this.shapeId = props.shape.contains(":") ? Identifier.tryParse(props.shape) : new Identifier("pride", props.shape);
+			this.shapeId = props.shape.contains(":") ? Identifier.tryParse(props.shape) : new Identifier("flagslib", props.shape);
 		}
 
-		this.shape = PrideFlagShapes.get(this.shapeId);
+		this.shape = FlagsLibFlagShapes.get(this.shapeId);
 		if (this.shape == null) {
-			throw new IllegalArgumentException("Unknown pride flag shape " + this.shapeId);
+			throw new IllegalArgumentException("Unknown flagslib flag shape " + this.shapeId);
 		}
 
 		var colorsTmp = new IntArrayList(props.colors.length);
@@ -39,7 +39,7 @@ public class PrideFlag {
 		return this.id;
 	}
 
-	public PrideFlagShape getShape() {
+	public FlagsLibFlagShape getShape() {
 		return this.shape;
 	}
 

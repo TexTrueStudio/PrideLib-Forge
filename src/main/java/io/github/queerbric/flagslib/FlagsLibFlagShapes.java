@@ -1,4 +1,4 @@
-package io.github.queerbric.pride;
+package io.github.queerbric.flagslib;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -13,23 +13,23 @@ import net.minecraft.util.math.Matrix4f;
 
 import java.util.Map;
 
-public class PrideFlagShapes {
-	private static final Map<Identifier, PrideFlagShape> REGISTRY = new Object2ObjectOpenHashMap<>();
+public class FlagsLibFlagShapes {
+	private static final Map<Identifier, FlagsLibFlagShape> REGISTRY = new Object2ObjectOpenHashMap<>();
 
-	public static PrideFlagShape get(Identifier id) {
+	public static FlagsLibFlagShape get(Identifier id) {
 		return REGISTRY.get(id);
 	}
 
-	public static void register(Identifier id, PrideFlagShape shape) {
+	public static void register(Identifier id, FlagsLibFlagShape shape) {
 		REGISTRY.put(id, shape);
 	}
 
-	private PrideFlagShapes() {
+	private FlagsLibFlagShapes() {
 	}
 
 	static {
-		PrideFlagShape horizStripes;
-		register(new Identifier("pride", "horizontal_stripes"), horizStripes = (colors, matrices, x, y, w, h) -> {
+		FlagsLibFlagShape horizStripes;
+		register(new Identifier("flagslib", "horizontal_stripes"), horizStripes = (colors, matrices, x, y, w, h) -> {
 			float sh = h / colors.size();
 			RenderSystem.disableTexture();
 			Matrix4f mat = matrices.peek().getPositionMatrix();
@@ -51,7 +51,7 @@ public class PrideFlagShapes {
 			// Mojang when will you use your state manager system to add fast pushAttrib/popAttrib
 			RenderSystem.enableTexture();
 		});
-		register(new Identifier("pride", "vertical_stripes"), (colors, matrices, x, y, w, h) -> {
+		register(new Identifier("flagslib", "vertical_stripes"), (colors, matrices, x, y, w, h) -> {
 			float sw = w / colors.size();
 			RenderSystem.disableTexture();
 			Matrix4f mat = matrices.peek().getPositionMatrix();
@@ -72,7 +72,7 @@ public class PrideFlagShapes {
 			t.draw();
 			RenderSystem.enableTexture();
 		});
-		register(new Identifier("pride", "circle"), (colors, matrices, x, y, w, h) -> {
+		register(new Identifier("flagslib", "circle"), (colors, matrices, x, y, w, h) -> {
 			RenderSystem.disableTexture();
 			Matrix4f mat = matrices.peek().getPositionMatrix();
 			Tessellator tess = Tessellator.getInstance();
@@ -109,7 +109,7 @@ public class PrideFlagShapes {
 			tess.draw();
 			RenderSystem.enableTexture();
 		});
-		register(new Identifier("pride", "arrow"), (colors, matrices, x, y, w, h) -> {
+		register(new Identifier("flagslib", "arrow"), (colors, matrices, x, y, w, h) -> {
 			float s = Math.min(w, h) / 2;
 			float cy = y + (h / 2);
 			horizStripes.render(colors.subList(1, colors.size()), matrices, x, y, w, h);
@@ -137,7 +137,7 @@ public class PrideFlagShapes {
 				0x001A98,
 				0x760089,
 		});
-		register(new Identifier("pride", "progress"), (colors, matrices, x, y, w, h) -> {
+		register(new Identifier("flagslib", "progress"), (colors, matrices, x, y, w, h) -> {
 			float hm = Math.min(w, h) / 2;
 			float cy = y + (h / 2);
 			Matrix4f mat = matrices.peek().getPositionMatrix();
