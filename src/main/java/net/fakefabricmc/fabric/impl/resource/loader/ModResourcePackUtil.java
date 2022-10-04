@@ -24,7 +24,7 @@ import java.util.Objects;
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.fabricmc.fabric.impl.resource.loader.FabricModResourcePack;
+import net.fakefabricmc.fabric.impl.resource.loader.FabricModResourcePack;
 import net.fakefabricmc.fabric.impl.resource.loader.ModResourcePackCreator;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.Nullable;

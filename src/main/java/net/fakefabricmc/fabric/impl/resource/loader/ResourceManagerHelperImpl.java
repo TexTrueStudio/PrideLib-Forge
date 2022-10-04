@@ -26,10 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.fabric.impl.resource.loader.BuiltinModResourcePackSource;
+import net.fakefabricmc.fabric.impl.resource.loader.BuiltinModResourcePackSource;
 import net.minecraft.resource.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +111,7 @@ public class ResourceManagerHelperImpl implements ResourceManagerHelper {
                 // Make the resource pack profile for built-in pack, should never be always enabled.
                 ResourcePackProfile profile = ResourcePackProfile.of(entry.getLeft(),
                         pack.getActivationType() == ResourcePackActivationType.ALWAYS_ENABLED,
-                        (Supplier<ResourcePack>) entry::getRight, factory, ResourcePackProfile.InsertionPosition.TOP, (ResourcePackSource) new BuiltinModResourcePackSource(pack.getFabricModMetadata().getId()));
+                        entry::getRight, factory, ResourcePackProfile.InsertionPosition.TOP, new BuiltinModResourcePackSource(pack.getFabricModMetadata().getId()));
                 if (profile != null) {
                     consumer.accept(profile);
                 }
@@ -177,7 +176,7 @@ public class ResourceManagerHelperImpl implements ResourceManagerHelper {
         }
     }
 
-    //@Override
+    @Override
     public void registerReloadListener(IdentifiableResourceReloadListener listener) {
         if (!addedListenerIds.add(listener.getFabricId())) {
             LOGGER.warn("Tried to register resource reload listener " + listener.getFabricId() + " twice!");
