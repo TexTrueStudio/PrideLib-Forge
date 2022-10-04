@@ -27,7 +27,7 @@ public class FlagsLibClient {
 	}
 
 	public void onInitializeClient(final FMLClientSetupEvent event) {
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) new FlagsLibLoader());
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new FlagsLibLoader());
 	}
 
 	public static Logger logger() {
