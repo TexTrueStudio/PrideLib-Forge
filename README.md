@@ -1,5 +1,5 @@
 <p align="center">
- <img width="100px" src="src/main/resources/icon.png" align="center" alt="PrideLib-Forge port(Unofficial) Logo" />
+ <img width="100px" src="src/main/resources/assets/pride/icon.png" align="center" alt="PrideLib-Forge port(Unofficial) Logo" />
  <h2 align="center">PrideLib-Forge port (Unofficial)</h2>
  <p align="center">A small JIJ dependency for modders who want to use a centralized data-driven and configurable source of pride flags in their mods. </p>
  <p align="center">
@@ -9,7 +9,7 @@
     <a title="Mod loader: Forge" target="_blank"><img src="https://img.shields.io/badge/Modloader-Forge-blue?style=flat-square"></a>
 </p>
 
-PrideLib is a small JIJ dependency for modders who want to use a centralized data-driven and configurable source of pride flags in their mods. 
+PrideLib-Forge is a small JIJ dependency for modders who want to use a centralized data-driven and configurable source of pride flags in their mods. 
 PrideLib can then be used to draw randomized graphical elements, or generate other colored visuals. PrideLib lets flags be added through resource packs, 
 optionally part of a mod. Flags used by PrideLib can be configured either with resource packs, or a config file.
 
